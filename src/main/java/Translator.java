@@ -19,7 +19,10 @@ public class Translator {
         this.opcodeTable.clear();
         while (fileScanner.hasNextLine()) {
             String[] line = fileScanner.nextLine().replace(" ", "").split(",");
-            if(line.length != 3) continue;
+            if (line.length != 3)
+                continue; // Ignore non-fitting lines.
+            if (line[0].charAt(0) == '#')
+                continue; // Ignore annotations.
             String mnemonic = line[0];
             Integer opcode = Integer.valueOf(line[1], 16); // Must be written in hex!
             Character dirMode = line[2].toLowerCase().toCharArray()[0];
@@ -30,5 +33,8 @@ public class Translator {
     }
 
     // TO DO: use opcodeTable to translate from ASM to hex and export as file.
+    public void translateFile() {
+
+    }
 
 }
