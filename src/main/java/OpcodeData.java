@@ -1,30 +1,22 @@
-import java.util.HashSet;
-
+/**
+ * @author Javier Pérez
+ *         Class OpcodeData represents an opcode and one of its valid directioning modes.
+ * @deprecated
+ */
 public class OpcodeData {
     private int opcode;
-    private  HashSet<Character> dirModes;
-    
-    public OpcodeData(int code)
-    {
+    private char dirMode;
+
+    public OpcodeData(int code, char dirMode) {
         this.opcode = code;
-        this.dirModes = new HashSet<>();
+        this.dirMode = dirMode;
     }
 
-    public void addMode(char mode)
-    {
-        if(!this.dirModes.contains(mode))
-        {
-            this.dirModes.add(mode);
-        }
-    }
-
-    public int opcode()
-    {
+    public int opcode() {
         return this.opcode;
     }
 
-    public HashSet<Character> modes()
-    {
-        return this.dirModes;
+    public char modes() {
+        return this.dirMode;
     }
 }

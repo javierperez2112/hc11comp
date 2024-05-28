@@ -7,7 +7,7 @@ import java.util.Scanner;
  *         Class Translator is able to import files
  */
 public class Translator {
-    private HashMap<String, OpcodeData> opcodeTable;
+    private HashMap<MnemonicData, Integer> opcodeTable;
 
     public Translator() {
         opcodeTable = new HashMap<>();
@@ -18,14 +18,13 @@ public class Translator {
         Scanner fileScanner = new Scanner(CSVfile);
         this.opcodeTable.clear();
         while (fileScanner.hasNextLine()) {
-            String[] line = fileScanner.nextLine().split(",");
-            String mnemonic = line[0].toLowerCase();
+            String[] line = fileScanner.nextLine().replace(" ", "").split(",");
+            if(line.length != 3) continue;
+            String mnemonic = line[0];
             Integer opcode = Integer.valueOf(line[1], 16); // Must be written in hex!
-            OpcodeData newOpcode = new OpcodeData(opcode);
-            line[2].chars().forEach(c -> {
-                newOpcode.addMode((char) c);
-            });
-            this.opcodeTable.put(mnemonic, newOpcode);
+            Character dirMode = line[2].toLowerCase().toCharArray()[0];
+            MnemonicData newMnemonic = new MnemonicData(mnemonic, dirMode);
+            this.opcodeTable.put(newMnemonic, opcode);
         }
         fileScanner.close();
     }
