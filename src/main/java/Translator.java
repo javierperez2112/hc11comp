@@ -43,22 +43,25 @@ public class Translator {
         fileScanner.close();
     }
 
+    // Process directives and store in asmMap.
     public void preprocessFile(String path) throws Exception {
         Path filePath = Paths.get(path);
         HashMap<String, String> equTable = new HashMap<>();
         // Scan into string.
         String text = Files.readString(filePath).toLowerCase();
+        // Replace words defined with EQU.
         text.lines().forEach(line -> {
             String[] parts = line.split("[ ]+");
             if (parts.length >= 3 && parts[1].equals("equ")) {
-                equTable.put(parts[0], parts[2]);
+                if (!equTable.containsKey(parts[0])) {
+                    equTable.put(parts[0], parts[2]);
+                }
             }
         });
-        for(String key : equTable.keySet())
-        {
+        for (String key : equTable.keySet()) {
             text = text.replace(key, equTable.get(key));
         }
-        System.out.println(text);
+        // TO DO: a lot!
     }
 
     public void printMOlist() {
