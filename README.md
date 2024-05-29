@@ -1,5 +1,6 @@
 # hc11comp
-Compiler for RP2040-based M68HC11 (kinda) emulator.
+Assembler for RP2040-based M68HC11 (kinda) emulator.
+
 ### hc11comp must be:
 * Portable: run on all OS's without much work.
 * Compatible: must output files that run on the [Wookie Emulator](http://vigir.ee.missouri.edu/~gdesouza/ece2210/downloads.htm).
@@ -18,6 +19,6 @@ Compiler for RP2040-based M68HC11 (kinda) emulator.
  * [ ] Create user interface (CLI) class.
  * [ ] Create USB interface class to load binary to the Pico. (Hardest part)
  * [ ] Try making a GUI...
- ## Not yet
+ ## Maybe...
  * [ ] Include directives other than EQU and ORG.
 > See [SREC format](https://en.wikipedia.org/wiki/SREC_(file_format))
