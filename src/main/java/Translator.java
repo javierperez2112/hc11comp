@@ -53,9 +53,7 @@ public class Translator {
         text.lines().forEach(line -> {
             String[] parts = line.split("[ ]+");
             if (parts.length >= 3 && parts[1].equals("equ")) {
-                if (!equTable.containsKey(parts[0])) {
-                    equTable.put(parts[0], parts[2]);
-                }
+                equTable.putIfAbsent(parts[0], parts[2]);
             }
         });
         for (String key : equTable.keySet()) {
