@@ -12,7 +12,7 @@ Compiler for RP2040-based M68HC11 (kinda) emulator.
  ## Classes
  * [x] Read M-O from files and store as `HashMap` or similar.
  * [ ] Preprocess and assemble code into hex/binary file. Include .s19 for Wookie!
-     * [ ] Hardcode compiler directives.
+     * [ ] Hardcode compiler directives EQU and ORG.
      * [ ] Translate mnemonics --> opcodes. 
  * [ ] Create user interface (CLI) class.
  * [ ] Create USB interface class to load binary to the Pico. (Hardest part)
