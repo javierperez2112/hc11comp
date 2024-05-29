@@ -1,0 +1,19 @@
+
+██╗  ██╗ ██████╗ ██╗ ██╗ ██████╗ ██████╗ ███╗   ███╗██████╗ 
+██║  ██║██╔════╝███║███║██╔════╝██╔═══██╗████╗ ████║██╔══██╗
+███████║██║     ╚██║╚██║██║     ██║   ██║██╔████╔██║██████╔╝
+██╔══██║██║      ██║ ██║██║     ██║   ██║██║╚██╔╝██║██╔═══╝ 
+██║  ██║╚██████╗ ██║ ██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     
+╚═╝  ╚═╝ ╚═════╝ ╚═╝ ╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝   
+
+Assembler for RP2040-based M68HC11 (kinda) emulator.
+Copyright (C) 2024  Javier Pérez 
+javierperez@itba.edu.ar
+
+--------------------------------------------------------
+                                                
+COMMANDS:
+import /path/to/file.csv    : Import mnemonic-opcode table (68H11.csv).
+assemble /path/to/file.msa  : Assemble file, output .s19 file with same name.
+quit                        : Quit HC11comp :(
+
