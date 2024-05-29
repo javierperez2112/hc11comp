@@ -13,14 +13,16 @@ import java.util.Scanner;
 public class Translator {
     private HashMap<MnemonicData, Integer> opcodeTable;
     private HashSet<String> menmonicList;
-    private String[] asmMap;
+    private String s19file;
+    private String hexFile;
     private int memorySize;
 
     public Translator(int memory) {
         opcodeTable = new HashMap<>();
         menmonicList = new HashSet<>();
+        this.s19file = new String();
+        this.hexFile = new String();
         this.memorySize = memory;
-        asmMap = new String[memory];
     }
 
     // Read M-O .csv file.
@@ -55,8 +57,6 @@ public class Translator {
     public boolean preprocessFile(String path) throws Exception {
         Path filePath = Paths.get(path);
         HashMap<String, String> equTable = new HashMap<>();
-        for (int i = 0; i < this.memorySize; i++)
-            this.asmMap[i] = null; // Scan into string.
         String text = Files.readString(filePath).toLowerCase();
         // Replace words defined with EQU.
         for (String line : text.lines().toList()) {
@@ -73,39 +73,13 @@ public class Translator {
         for (String key : equTable.keySet()) {
             text = text.replace(key, equTable.get(key));
         }
-        // Fill asmMap.
-        int index = 0;
-        for (String line : text.lines().toList()) {
-            if (line.isEmpty())
-                continue;
-            String[] parts = line.split("[ ]+");
-            if (parts[0].equals("org")) {
-                index = getArgument(parts[1]);
-                continue;
-            }
-            if (this.menmonicList.contains(parts[0])) {
-                this.asmMap[index] = line;
-                index++;
-            }
-        }
+        // TO DO: translate into s19 and hex.
         return true;
-    }
-
-    // Store ASM->hex translation as string.
-    public String translateAsm() {
-        return new String();
     }
 
     public void printMOlist() {
         for (MnemonicData data : this.opcodeTable.keySet()) {
             System.out.println(data + " : " + String.format("%x", this.opcodeTable.get(data)));
-        }
-    }
-
-    public void printAsm() {
-        for (int i = 0; i < this.memorySize; i++) {
-            if (this.asmMap[i] != null)
-                System.out.println(String.format("%x", i) + ": " + this.asmMap[i]);
         }
     }
 
