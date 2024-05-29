@@ -6,7 +6,7 @@ public class App {
         try {
             tltr.readCSV("./68H11.csv");
             tltr.preprocessFile("./testfile");
-            tltr.printWithoutDirectives();
+            //tltr.printMOlist();
         } catch(Exception e)
         {
             System.err.println(e.getMessage());

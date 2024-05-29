@@ -1,4 +1,7 @@
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -41,43 +44,25 @@ public class Translator {
     }
 
     public void preprocessFile(String path) throws Exception {
-        File asmFile = new File(path);
-        Scanner fileScanner = new Scanner(asmFile);
-        int index = 0;
-        while (fileScanner.hasNextLine()) {
-            String wholeLine = fileScanner.nextLine().toLowerCase().replace("  ", "").replace("\t", "");
-            String[] line = wholeLine.split(" "); // Don't use tabs!!
-            if (this.menmonicList.contains(line[0])) // Store valid asm line.
-            {
-                this.asmMap[index] = wholeLine;
-                index++;
-            } else {
-                // TO DO: process compiler directives (hardcode).
+        Path filePath = Paths.get(path);
+        HashMap<String, String> equTable = new HashMap<>();
+        // Scan into string.
+        String text = Files.readString(filePath).toLowerCase();
+        text.lines().forEach(line -> {
+            String[] parts = line.split("[ ]+");
+            if (parts.length >= 3 && parts[1].equals("equ")) {
+                equTable.put(parts[0], parts[2]);
             }
+        });
+        for(String key : equTable.keySet())
+        {
+            text = text.replace(key, equTable.get(key));
         }
-        fileScanner.close();
+        System.out.println(text);
     }
 
-    public void printWithoutDirectives()
-    {
-        for(int i = 0; i < this.memorySize; i++)
-        {
-            System.out.println(i + ": " + this.asmMap[i]);
-        }
-    }
-
-    public void printMnemList()
-    {
-        for(String mnem : this.menmonicList)
-        {
-            System.out.println(mnem);
-        }
-    }
-
-    public void printMOlist()
-    {
-        for(MnemonicData data : this.opcodeTable.keySet())
-        {
+    public void printMOlist() {
+        for (MnemonicData data : this.opcodeTable.keySet()) {
             System.out.println(data + " : " + String.format("%x", this.opcodeTable.get(data)));
         }
     }
