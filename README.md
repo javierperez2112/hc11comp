@@ -17,3 +17,4 @@ Compiler for RP2040-based M68HC11 (kinda) emulator.
  * [ ] Create user interface (CLI) class.
  * [ ] Create USB interface class to load binary to the Pico. (Hardest part)
  * [ ] Try making a GUI...
+> See [SREC format](https://en.wikipedia.org/wiki/SREC_(file_format))
