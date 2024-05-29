@@ -8,7 +8,7 @@ Compiler for RP2040-based M68HC11 (kinda) emulator.
 
 # TO DO LIST
 ## General
-* [ ] Make mnemonic-opcode (M-O) translation table (use CSV or TSV format). Columns: (mnemonic, opcode, dir mode)
+* [x] Make mnemonic-opcode (M-O) translation table (use CSV or TSV format). Columns: (mnemonic, opcode, dir mode)
  ## Classes
  * [x] Read M-O from files and store as `HashMap` or similar.
  * [ ] Preprocess and assemble code into hex/binary file. Include .s19 for Wookie!
