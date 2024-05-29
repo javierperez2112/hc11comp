@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,15 +14,14 @@ import java.util.Scanner;
 public class Translator {
     private HashMap<MnemonicData, Integer> opcodeTable;
     private HashSet<String> menmonicList;
-    private String s19file;
-    private String hexFile;
+    private String processedText;
+    private StringBuilder s19file;
     private int memorySize;
 
     public Translator(int memory) {
         opcodeTable = new HashMap<>();
         menmonicList = new HashSet<>();
-        this.s19file = new String();
-        this.hexFile = new String();
+        this.s19file = new StringBuilder();
         this.memorySize = memory;
     }
 
@@ -53,28 +53,39 @@ public class Translator {
         }
     }
 
-    // Process directives and store in asmMap.
-    public boolean preprocessFile(String path) throws Exception {
+    // Process directives and store in text.
+    public void preprocessFile(String path) throws Exception {
         Path filePath = Paths.get(path);
         HashMap<String, String> equTable = new HashMap<>();
         String text = Files.readString(filePath).toLowerCase();
         // Replace words defined with EQU.
+        int lineNum = 0;
         for (String line : text.lines().toList()) {
             String[] parts = line.split("[ ]+");
             if (parts.length >= 3 && parts[1].equals("equ")) {
-                if (this.menmonicList.contains(parts[0])) {
-                    System.err.println("Careful! Don't use EQU with reserved words!");
-                    return false;
+                if (this.menmonicList.contains(parts[0]) || parts[0].equals("org")) {
+                    throw new Exception("Used EQU with a reserved word in line " + lineNum);
+                } else if (equTable.containsKey(parts[0])) {
+                    throw new Exception("Repeated EQU statement in line " + lineNum);
                 } else {
                     equTable.putIfAbsent(parts[0], parts[2]);
                 }
             }
+            lineNum++;
         }
+
         for (String key : equTable.keySet()) {
             text = text.replace(key, equTable.get(key));
         }
-        // TO DO: translate into s19 and hex.
-        return true;
+        this.processedText = text;
+    }
+
+    public void makeS19() throws Exception {
+        if (this.processedText.isEmpty()) {
+            throw new Exception("No preprocessed file.");
+        }
+        this.s19file = new StringBuilder();
+        this.s19file.append("S00D48433131434F4D502D49544241 + checksum"); // Checksum logic pending.
     }
 
     public void printMOlist() {
@@ -98,4 +109,17 @@ public class Translator {
         return retValue;
     }
 
+    public void makeS19File(String name) throws Exception {
+        if (!name.contains(".s19")) {
+            name = name + ".s19";
+        }
+        File newFile = new File(name);
+        if(!newFile.createNewFile())
+        {
+            throw new Exception("File creation failed for " + name);
+        }
+        FileWriter writer = new FileWriter(newFile);
+        writer.append(this.s19file.toString());
+        writer.close();
+    }
 }
