@@ -30,4 +30,9 @@ public class MnemonicData {
         }
         return false;
     }
+    @Override
+    public String toString()
+    {
+        return this.mnemonic;
+    }
 }
