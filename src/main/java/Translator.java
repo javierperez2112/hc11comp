@@ -86,6 +86,7 @@ public class Translator {
         }
         this.s19file = new StringBuilder();
         this.s19file.append("S00D48433131434F4D502D49544241 + checksum"); // Checksum logic pending.
+        
     }
 
     public void printMOlist() {

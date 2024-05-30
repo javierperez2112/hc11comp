@@ -8,7 +8,7 @@
 
 Assembler for RP2040-based M68HC11 (kinda) emulator.
 Copyright (C) 2024  Javier Pérez 
-javierperez@itba.edu.ar
+jperezlosada@itba.edu.ar
 
 --------------------------------------------------------
                                                 
